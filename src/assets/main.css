@@ -1,0 +1,16 @@
+@import './base.css';
+
+
+
+
+
+@media (min-width: 1024px) {
+
+
+  #app {
+    display: grid;
+    grid-template-columns: 1.4fr 10fr;
+    padding: 0 0rem;
+
+}
+}
