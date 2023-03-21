@@ -3,20 +3,23 @@
     <el-container>
       
       <el-main>
-  
-        <p>{{ nameTitle }}</p>
+        <div class="cardItem">
+          <p class="cardText">{{ nameTitle }}</p>
     
-        <p>{{ priceTitle }}</p>
- 
-        <p>{{ sostavTitle }}</p>
+    <p class="cardText">{{ priceTitle }}</p>
+
+    <p class="cardText">{{ sostavTitle }}</p>
+
+        </div>
+        
         <el-button type="success" @click="sortByPrice" >Сортировать в верх </el-button>
         <el-button type="success" @click="sortByPricemenus">Сортировать в низ </el-button>
         <el-button type="success" @click="FiltrationByPricemenus"> Фильтровать товар который меньше 300 </el-button>
         <el-scrollbar class="TableStyle">
-          <el-table    class="Table"  :data="tableData" @row-click="CliclRowFuction" @sort-change="sortByPrice"
+          <el-table    class="Table"  :data="tableData" @row-click="CliclRowFuction" @sort-change="sortMethod"
          >
             <el-table-column    class="TitleColums" prop="name" label="Name" width="140" />
-            <el-table-column  class="TitleColums" prop="price" label="Price" width="200" />
+            <el-table-column sortable:sort-method="sortMethod"  class="TitleColums" prop="price" label="Price" width="200" />
            
           </el-table>
           <h1 :data="InfoProduct"></h1>
@@ -41,6 +44,16 @@ el-table{
   font-family: 'Times New Roman', Times, serif;
   color-scheme: #929292;
 }
+.cardItem
+{
+  width: 300px;
+  height: 100px;
+   background: #a69090;
+   border-radius: 15px;
+}
+.cardText
+{
+  color: #000000;}
   .about {
     min-height: 100vh;
     display: flex;
@@ -51,8 +64,14 @@ el-table{
 .flex-grow {
   flex-grow: 1;
 }
+.Table{
+  width: 630px;
+  border-radius: 15px;
+
+}
 .TableStyle{
   width: 80vw;
+  border-radius: 15px;
   
    
 }
@@ -100,28 +119,20 @@ console.log(experiment1)
 console.log(tableData)
 
 function sortByPrice() { 
-      tableData.value = null;
-      let someUsers2 =    experiment1.sort(
+    tableData.value= experiment1.sort(
     (firstObject: Food, secondObject: Food) =>
     	(firstObject.price > secondObject.price) ? 1 : -1
       
     );
-      tableData.value = someUsers2
-      console.log(someUsers2)
-      console.log(tableData)
-      console.log(rowKey)
+
 }
 
 function sortByPricemenus(sort:any) { 
-  let someUsers1 =   experiment1.sort(
+    tableData.value = experiment1.sort(
     (firstObject: Food, secondObject: Food) =>
     	(firstObject.price < secondObject.price) ? 1 : -1
 );
-
-    console.log(someUsers1)
-    tableData.value = someUsers1
     console.log(tableData)
-    
 }
 
 function FiltrationByPricemenus() { 
@@ -135,14 +146,22 @@ function FiltrationByPricemenus() {
 }
 function CliclRowFuction(row: any) { 
   console.log(nameTitle)
-   sostavTitle=row.sostav
-   nameTitle=row.name
-   priceTitle=row.price
+   sostavTitle.value=row.sostav
+   nameTitle.value=row.name
+   priceTitle.value=row.price
  console.log(nameTitle)
 
 }
 
+function sortMethod(a: any, b: any) {
+    if (a.columnName < b.columnName) {
+      return -1;
+    } else if (a.columnName > b.columnName) {
+      return 1;
+    } else {
+      return 0;
+    }
 
 
-
+  }
 </script>
